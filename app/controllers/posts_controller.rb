@@ -19,10 +19,9 @@ class PostsController < ApplicationController
 
   def create
     the_post = Post.new
-    the_post.title = params.fetch("title_field")
-    the_post.body = params.fetch("body_field")
-    the_post.expires_on = params.fetch("expire_on_date")
-    the_post.board_id = params.fetch("board_id_field")
+    the_post.body = params.fetch("body")
+    the_post.expires_on = params.fetch("expires_on")
+    the_post.board_id = params.fetch("board_id")
 
     if the_post.valid? 
       the_post.save

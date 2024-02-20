@@ -14,41 +14,41 @@
 <form action="/insert_post" method="post">
   <div>
     <label for="title_field">Title</label>
-    <input id="title_field" type="text" name="title">
+    <input name="title" id="title_field" type="text" >
   </div>
   <div>
     <label for="body_field">Body</label>
-    <textarea name="body_field" id="body_field" cols="30" rows="10"></textarea>
+    <textarea name="body" id="body_field" cols="30" rows="10"></textarea>
   </div>
   <div>
-    <label for="expire_on_date">Expires on</label>
-    <input id="expire_on_date" type="date" name="expires">
+    <label for="expires_on_field">Expires on</label>
+    <input name="expires_on" type="date" id="expires_on_field">
   </div>
-  <div>
-    <label for="board_id_field">Board ID</label>
-    <input id="board_id_field" type="text" name="board_id">
-  </div>
+  <input name="board_id" type="hidden" id="board_id_field" value="<%= @the_board.id %>">
 
-  <button>Add post</button>
+  <button>
+    Add post
+  </button>
+</form>
 
-  <h2>Active posts</h2>
+<h2>Active posts</h2>
 
-  <% matching_posts = Post.where({ :board_id => @the_board.id }).order({ :expires_on => :asc }) %>
+<% matching_posts = Post.where({ :board_id => @the_board.id }).order({ :expires_on => :asc }) %>
 
-  <table border="1">
+<table border="1">
+  <tr>
+    <th>Title</th>
+    <th>Body</th>
+    <th>Posted on</th>
+    <th>Expries on</th>
+  </tr>
+
+  <% matching_posts.each do |a_post| %>
     <tr>
-      <th>Title</th>
-      <th>Body</th>
-      <th>Posted on</th>
-      <th>Expries on</th>
+      <td><%= a_post.title %></td>
+      <td><%= a_post.body %></td>
+      <td><%= a_post.created_at.strftime("%b %e, %Y") %></td>
+      <td><%= a_post.expires_on.strftime("%b %e, %Y") %></td>
     </tr>
-
-    <% matching_posts.each do |a_post| %>
-      <tr>
-        <td><%= a_post.title %></td>
-        <td><%= a_post.body %></td>
-        <td><%= a_post.created_at.strftime("%b %e, %Y") %></td>
-        <td><%= a_post.expires_on.strftime("%b %e, %Y") %></td>
-      </tr>
-    <% end %>
-  </table>
+  <% end %>
+</table>
